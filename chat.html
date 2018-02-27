@@ -29,43 +29,27 @@
     <script type="text/javascript">
 
         $(document).ready(function (){
-
-            var message = "";
-            setInterval(function(){
-                getdata();
-            },300);
-
-
-            function getdata() {
-                $.get("getdata.php",function (data) {
-
-
-                    var count = 0;
-                  data.forEach(function () {
-                     count++;
-                  });
-
-
-
-
-                    var show = 0;
-                    for (a in data){
-                        if ( show >= count-15 ){
-                            message += "<p>"+ data[a].username + "：" + data[a].message+"</p>";
+            function getdata(id) {
+                id = id || 0;
+                $.get("getdata.php?id="+id,function (data) {
+                    if(data){
+                        var message = $("#show_message").html();//旧的数据
+                        var len = data.length;
+                        for(var i=0;i<=len;i++){
+                            message += "<p>"+ data[i].username + "：" + data[i].message+"</p>";
                             $("#show_message").html(message);
                         }
-                        show++;
                     }
-
-                    message = "";
+                    setTimeout(function () {
+                        alert(data[i].messageID);
+                        getdata(data[i].messageID);
+                    },500);
                 });
             }
 
             //点击发送按钮触发函数
             $("#ckq").click(function(e){
-
                     var obj=$("#ck");
-
                     var user = $('input:radio:checked').val();
                     $.ajax({
                         url: "chat.php",
@@ -73,12 +57,9 @@
                         async: false,
                         data: {"in":obj.val(),"username":user}
                     });
-                $("#ck").val("");
+                    $("#ck").val("");
                     getdata();
-
-
             });
-
         })
 
     </script>
