@@ -10,6 +10,7 @@ $connect = mysqli_connect('localhost','root','root','line')or die('数据库连�
 $sql="set names utf8 ";
 
 
+
 mysqli_query($connect,$sql);
 
 $sql = "CREATE TABLE IF NOT EXISTS `mymessage` (  
