@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <!-- jQuery静态库。-->
+    <script src="http://www.online.com/jquery-3.2.1.min.js"></script>
+
+
+    </head>
+
+    <style type="text/css">
+
+    </style>
+    <body>
+
+   <h4><p id="message">小杨与小林的对话：</p></h4>
+   选择身份：<input type="radio" name="sex" value="小杨" checked>小杨
+    <input type="radio" name="sex" value="小林">小林
+    <br/>
+    <div id="show_message">
+    </div>
+    <input type="text" id="ckq" name="in"/>
+
+    </body>
+    </html>
+
+    <script type="text/javascript">
+
+        $(document).ready(function (){
+
+            var message = "";
+            setInterval(function(){
+                getdata();
+            },500);
+
+
+            function getdata() {
+                $.get("getdata.php",function (data) {
+                    var count = 0;
+                    for (a in data){
+                        count++;
+                    }
+
+
+                    var show = 0;
+                    for (a in data){
+                        if ( show >= count-15 ){
+                            message += "<p>"+ data[a].username + "：" + data[a].message+"</p>";
+                            $("#show_message").html(message);
+                        }
+                        show++;
+                    }
+
+                    message = "";
+                });
+            }
+
+            //按下键盘触发函数
+            $("#ckq").keydown(function(e){
+                //如果按下的是回车
+                if(e.keyCode==13){
+                    var user = $('input:radio:checked').val();
+                    $.ajax({
+                        url: "chat.php",
+                        type: "post",
+                        async: false,
+                        data: {"in":$("#ckq").val(),"username":user}
+                    });
+                    getdata();
+                    $("#ckq").val("");
+                }
+            });
+
+        })
+
+    </script>
+
