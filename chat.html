@@ -29,23 +29,28 @@
     <script type="text/javascript">
 
         $(document).ready(function (){
+            var messageID=0;
             function getdata(id) {
                 id = id || 0;
+
                 $.get("getdata.php?id="+id,function (data) {
+                    console.log(data);
                     if(data){
                         var message = $("#show_message").html();//旧的数据
                         var len = data.length;
-                        for(var i=0;i<=len;i++){
+                        for(var i=0;i<len;i++){
                             message += "<p>"+ data[i].username + "：" + data[i].message+"</p>";
                             $("#show_message").html(message);
+                            messageID=data[i].messageID;
                         }
                     }
                     setTimeout(function () {
-                        alert(data[i].messageID);
-                        getdata(data[i].messageID);
+//                        alert(data[i].messageID);
+                          getdata(messageID);
                     },500);
                 });
             }
+            getdata(messageID);
 
             //点击发送按钮触发函数
             $("#ckq").click(function(e){
@@ -54,11 +59,10 @@
                     $.ajax({
                         url: "chat.php",
                         type: "post",
-                        async: false,
                         data: {"in":obj.val(),"username":user}
                     });
                     $("#ck").val("");
-                    getdata();
+//                    getdata(messageID);
             });
         })
 

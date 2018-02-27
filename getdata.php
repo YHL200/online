@@ -4,10 +4,11 @@
 
 include 'databases.php';
 header('content-type:application/json;charset=utf8');
-$id =$_GET['id'];
+$id =intval($_GET['id']);
 
-$sql="select message,username from mymessage WHERE messageid >$id ORDER BY  messageid DESC  limit 2";
+$sql="select  messageID,message,username from mymessage WHERE messageID >$id";
 
+//echo $sql;exit();
 
 $result = mysqli_query($connect,$sql);
 
