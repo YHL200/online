@@ -4,7 +4,7 @@
 
 include 'databases.php';
 header('content-type:application/json;charset=utf8');
-$sql="select message,username from mymessage";
+$sql="select message,username from mymessage   order by messageID desc  LIMIT  4";
 
 $result = mysqli_query($connect,$sql);
 

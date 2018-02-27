@@ -13,14 +13,6 @@ $sql="set names utf8 ";
 
 mysqli_query($connect,$sql);
 
-$sql = "CREATE TABLE IF NOT EXISTS `mymessage` (  
-  messageID int NOT NULL AUTO_INCREMENT,
-  username char(30) NOT NULL,
-  message char(30) NOT NULL,  
-  PRIMARY KEY (messageID) 
-) ENGINE=InnoDB DEFAULT CHARSET=gbk; "  ;
-
-mysqli_query($connect,$sql);
 
 
 
